@@ -261,7 +261,7 @@ impl Credentials {
         Credentials::from_env_specific(None, None, None, None)
     }
 
-    fn from_instance_metadata() -> Result<Credentials> {
+    pub fn from_instance_metadata() -> Result<Credentials> {
         if !Credentials::is_ec2() {
             return Err(AwsCredsError::from("Not an EC2 instance"));
         }
