@@ -341,6 +341,15 @@ impl Bucket {
         Ok(request.response_data_future(false).await?)
     }
 
+    pub fn get_object_range_blocking<S: AsRef<str>>(
+        &self,
+        path: S,
+        start: u64,
+        end: Option<u64>,
+    ) -> Result<(Vec<u8>, u16)> {
+        let mut rt = Runtime::new()?;
+        Ok(rt.block_on(self.get_object_range(path, start, end))?)
+    }
 
     /// Stream file from S3 path to a local file, generic over T: Write, blocks.
     ///
